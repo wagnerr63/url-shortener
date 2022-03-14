@@ -3,6 +3,7 @@ package shortenedurl
 import (
 	"encoding/json"
 	"net/http"
+	"text/template"
 	"url-shortener/usecases"
 	shortenedurl "url-shortener/usecases/shortenedUrl"
 
@@ -12,6 +13,7 @@ import (
 type IShortenedUrlController interface {
 	Create(w http.ResponseWriter, r *http.Request)
 	FindByShortenedUrl(w http.ResponseWriter, r *http.Request)
+	Index(w http.ResponseWriter, r *http.Request)
 }
 
 type controllers struct {
@@ -47,4 +49,10 @@ func (ctr *controllers) FindByShortenedUrl(w http.ResponseWriter, r *http.Reques
 	}
 
 	http.Redirect(w, r, "https://"+shortenedUrlByID.Url, http.StatusMovedPermanently)
+}
+
+var temp = template.Must(template.ParseGlob("templates/*.html"))
+
+func (ctr *controllers) Index(w http.ResponseWriter, r *http.Request) {
+	temp.ExecuteTemplate(w, "Index", nil)
 }

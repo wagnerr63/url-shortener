@@ -30,6 +30,7 @@ func main() {
 
 	router.POST("/add", controllers.ShortenedUrl.Create)
 	router.GET("/{id}", controllers.ShortenedUrl.FindByShortenedUrl)
+	router.GET("/", controllers.ShortenedUrl.Index)
 
 	router.SERVE(":" + os.Getenv("PORT"))
 }
