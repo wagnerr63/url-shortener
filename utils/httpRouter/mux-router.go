@@ -40,6 +40,9 @@ func (*muxRouter) DELETE(uri string, f http.HandlerFunc) {
 }
 
 func (*muxRouter) SERVE(port string) {
+	muxDispatcher.PathPrefix("/public/").Handler(
+		http.StripPrefix("/public/", http.FileServer(http.Dir("public"))),
+	)
 	fmt.Println("Server started at http://" + os.Getenv("HOST") + ":" + os.Getenv("PORT"))
 	log.Fatal(http.ListenAndServe(port, muxDispatcher))
 }
