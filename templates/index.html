@@ -15,13 +15,38 @@
 
         <h1 class="container__section__title">URL Shortener</h1>
 
-        <form class="container__section__form">
-          <input type="text" placeholder="Your link" class="container__section__form__input">
+        <form class="container__section__form" name="add_url">
+          <input type="text" placeholder="Your link" name="url" class="container__section__form__input">
           <button class="container__section__form__button">Shorten</button>
         </form>
 
+        <div class="container__section__response">
+          Your shortened url: <span id="newUrl"></span>
+        </div>
+
       </section>
     </main>
+    <script>
+      const form = document.forms.add_url;
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const url = event.target.url.value;
+        if (url!=="" || url!==undefined) {
+          
+          fetch('/add', {
+            method: 'POST',
+            body: {
+              "url": url
+            }
+          }).then(async (response) => {
+            const data = await response.json();
+          }).catch((err) => {
+            console.log('Err: ', err)
+          });
+
+        }
+      })
+    </script>
 </body>
 </html>
 {{end}}
