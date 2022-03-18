@@ -2,7 +2,6 @@ package shortenedurl
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"strings"
 	"time"
@@ -56,7 +55,6 @@ func (usecase *shortenedUrlUseCases) Create(data ICreateShortenedUrlDTO) (ICreat
 		return ICreateShortenedUrlResponseDTO{}, errors.New("error to create shortened url")
 	}
 
-	fmt.Println(newShortenedUrl)
 	return ICreateShortenedUrlResponseDTO{
 		NewUrl: os.Getenv("HOST") + ":" + os.Getenv("PORT") + "/" + newShortenedUrl.ShortenedID,
 	}, nil
