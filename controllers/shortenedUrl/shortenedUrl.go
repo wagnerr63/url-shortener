@@ -2,6 +2,7 @@ package shortenedurl
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"text/template"
 	"url-shortener/usecases"
@@ -26,7 +27,9 @@ func New(usecases *usecases.Container) IShortenedUrlController {
 
 func (ctr *controllers) Create(w http.ResponseWriter, r *http.Request) {
 	var data shortenedurl.ICreateShortenedUrlDTO
+	fmt.Println(r.Body)
 	json.NewDecoder(r.Body).Decode(&data)
+	fmt.Println(data)
 
 	newUrl, err := ctr.usecases.ShortenedUrl.Create(data)
 	if err != nil {

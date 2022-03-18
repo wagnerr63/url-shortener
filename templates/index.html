@@ -20,8 +20,8 @@
           <button class="container__section__form__button">Shorten</button>
         </form>
 
-        <div class="container__section__response">
-          Your shortened url: <span id="newUrl"></span>
+        <div class="container__section__response display-none" id="newurl_container">
+          Your shortened url: <a id="newUrl" href="" target="_blank"></a>
         </div>
 
       </section>
@@ -35,11 +35,15 @@
           
           fetch('/add', {
             method: 'POST',
-            body: {
-              "url": url
-            }
+            body: JSON.stringify({"url": url}),
+            headers: new Headers({"Content-Type": "application/json"})
           }).then(async (response) => {
             const data = await response.json();
+            const aTag = document.getElementById("newUrl");
+            const containerUrl = document.getElementById("newurl_container");
+            aTag.innerHTML = "http://"+data.newUrl;
+            aTag.href = "http://"+data.newUrl;
+            containerUrl.classList.remove("display-none");
           }).catch((err) => {
             console.log('Err: ', err)
           });
