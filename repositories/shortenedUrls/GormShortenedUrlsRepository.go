@@ -2,7 +2,6 @@ package shortenedUrls
 
 import (
 	"errors"
-	"fmt"
 	"url-shortener/entities"
 
 	"gorm.io/gorm"
@@ -18,7 +17,6 @@ func NewGormRepository(writer, reader *gorm.DB) IShortnedUrlsRepository {
 }
 
 func (repo *repoGorm) Create(shortenedUrl entities.ShortenedUrl) error {
-	fmt.Println("aaaaa")
 	repo.writer.Table("shortened_urls").Create(&shortenedUrl)
 
 	return repo.writer.Error
