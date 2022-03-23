@@ -2,6 +2,7 @@ package shortenedUrls
 
 import (
 	"errors"
+	"fmt"
 	"url-shortener/entities"
 
 	"gorm.io/gorm"
@@ -17,7 +18,7 @@ func NewGormRepository(writer, reader *gorm.DB) IShortnedUrlsRepository {
 }
 
 func (repo *repoGorm) Create(shortenedUrl entities.ShortenedUrl) error {
-
+	fmt.Println("aaaaa")
 	repo.writer.Table("shortened_urls").Create(&shortenedUrl)
 
 	return repo.writer.Error
@@ -52,6 +53,10 @@ func (repo *repoGorm) FindByUrl(url string) (entities.ShortenedUrl, error) {
 	repo.reader.Table("shortened_urls").Where("url = ?", url).Find(&shortenedUrlByUrl)
 
 	if repo.reader.Error != nil {
+		return entities.ShortenedUrl{}, errors.New("shortened url not found")
+	}
+
+	if (entities.ShortenedUrl{} == shortenedUrlByUrl) {
 		return entities.ShortenedUrl{}, errors.New("shortened url not found")
 	}
 

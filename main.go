@@ -18,9 +18,12 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	router := configs.InitTools()
+	repositories := repositories.New(repositories.Options{
+		WriterGorm: configs.GetWriterGorm(),
+		ReaderGorm: configs.GetReaderGorm(),
+	})
 
-	repositories := repositories.New()
+	router := configs.InitTools()
 
 	usecases := usecases.New(usecases.Options{
 		Repo: repositories,

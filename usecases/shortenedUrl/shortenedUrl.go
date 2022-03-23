@@ -2,6 +2,7 @@ package shortenedurl
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"strings"
 	"time"
@@ -40,6 +41,7 @@ func (usecase *shortenedUrlUseCases) Create(data ICreateShortenedUrlDTO) (ICreat
 
 	shortenedUrlFindByUrl, err := usecase.repositories.ShortenedUrl.FindByUrl(treatedUrl)
 
+	fmt.Print(shortenedUrlFindByUrl)
 	if err == nil {
 		return ICreateShortenedUrlResponseDTO{
 			NewUrl: os.Getenv("HOST") + ":" + os.Getenv("PORT") + "/" + shortenedUrlFindByUrl.ShortenedID,
