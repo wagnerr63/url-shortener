@@ -67,7 +67,8 @@ func (usecase *shortenedUrlUseCases) FindByShortenedID(shortenedID string) (enti
 		return entities.ShortenedUrl{}, errors.New("not found")
 	}
 
-	parsedExpireDate, _ := time.Parse("2006-01-02 15:04:05", shortenedUrlByShortenedID.ExpiresIn)
+	parsedExpireDate, _ := time.Parse("2006-01-02T15:04:05Z", shortenedUrlByShortenedID.ExpiresIn)
+
 	if parsedExpireDate.Unix() < time.Now().Unix() {
 		return entities.ShortenedUrl{}, errors.New("shortened url expired")
 	}

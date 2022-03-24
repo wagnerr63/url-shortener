@@ -36,7 +36,7 @@ func (repo *repoGorm) FindAll() ([]entities.ShortenedUrl, error) {
 func (repo *repoGorm) FindByShortenedID(id string) (entities.ShortenedUrl, error) {
 	var shortenedUrlById entities.ShortenedUrl
 
-	repo.reader.Table("shortened_urls").Find(&shortenedUrlById)
+	repo.reader.Table("shortened_urls").Where("shortened_id = ?", id).Find(&shortenedUrlById)
 
 	if repo.reader.Error != nil {
 		return entities.ShortenedUrl{}, errors.New("shortened url not found")
